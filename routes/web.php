@@ -24,7 +24,7 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@create')->name('signup');
 Route::resource('users', 'UsersController');
 
-// 绘画管理
-Route::get('login','SessionsController@create')->name('login');
+// 会话管理
+Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
