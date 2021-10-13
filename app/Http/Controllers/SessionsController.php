@@ -7,7 +7,7 @@ use Auth;
 
 class SessionsController extends Controller
 {
-    // 登录
+    // 添加登录控制器
     public function create(){
         return view('sessions.create');
     }
@@ -25,5 +25,12 @@ class SessionsController extends Controller
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return redirect()->back()->withInput();
         }
+    }
+
+    // 添加退出控制器
+    public function destroy(){
+        Auth::logout();
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
     }
 }
