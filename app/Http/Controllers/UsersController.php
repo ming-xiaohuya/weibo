@@ -74,5 +74,11 @@ class UsersController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
-}
+    }
+
+    public function index(){
+        // $users = user::all();  获取全部数据
+        $users = User::paginate(6); // 分页获取用户数据
+        return view('users.index', compact('users'));
+    }
 }
