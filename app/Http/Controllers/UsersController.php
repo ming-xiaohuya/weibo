@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -38,11 +39,14 @@ class UsersController extends Controller
 
     // 编辑用户操作
     public function edit(User $user){
+        // 使用authorize方法来验证用户授权策略
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     // 更新用户信息
     public function update(User $user,Request $request){
+        $this->authorize('update', $user);
         $this->validate($request,[
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'        // nullable当用户提交的密码为空是也能通过验证
@@ -57,6 +61,18 @@ class UsersController extends Controller
         $user->update($data);
         session()->flash('success', '个人资料更新成功！');
         return redirect()->route('users.show',$user);
-
     }
+
+    // __construct是PHP的构造方法
+    //  Auth 中间件在过滤指定动作时，如该用户未通过身份验证（未登录用户），默认将会被重定向到 /login 登录页面。
+    public function __construct() {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store']
+        ]);
+
+        // 实现只让未登录的用户访问登录页面和注册页面
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+}
 }
