@@ -74,11 +74,24 @@ class UsersController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+
+        // 实现删除功能
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store', 'index']
+        ]);
     }
 
+    // 实现显示所有用户数据动作
     public function index(){
         // $users = user::all();  获取全部数据
         $users = User::paginate(6); // 分页获取用户数据
         return view('users.index', compact('users'));
     }
+
+    // 实现删除动作
+    public function destroy(User $user) {
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back(); }
 }
