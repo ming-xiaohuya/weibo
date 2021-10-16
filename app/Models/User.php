@@ -61,4 +61,9 @@ class User extends Authenticatable
     public function statuses() {
         return $this->hasMany(Status::class);
     }
+
+    // 获取数据，并根据创建的时间倒序排序
+    public function feed() {
+        return $this->statuses() ->orderBy('created_at', 'desc');
+    }
 }
