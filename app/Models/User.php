@@ -64,7 +64,13 @@ class User extends Authenticatable
 
     // 获取数据，并根据创建的时间倒序排序
     public function feed() {
-        return $this->statuses() ->orderBy('created_at', 'desc');
+
+        // 通过 followings 方法取出所有关注用户的信息，再借助 pluck 方法将 id 进行分离并赋值给 user_ids
+        $user_ids = $this->followings->pluck('id')->toArray();
+
+        // 将当前用户的 id 加入到 user_ids 数组中
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids) ->with('user') ->orderBy('created_at', 'desc');
     }
 
     // 建立表关联
