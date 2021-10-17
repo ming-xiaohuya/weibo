@@ -95,12 +95,12 @@ class PasswordController extends Controller
         return redirect()->back();
     }
 
-    public function __construct() {
+    // public function __construct() {
 
-        // 限流，一分钟只能访问两次
-        $this->middleware('throttle:2,1', [ 'only' => ['showLinkRequestForm'] ]);
+    //     // 限流，一分钟只能访问两次
+    //     $this->middleware('throttle:2,1', [ 'only' => ['showLinkRequestForm'] ]);
 
-        // 限流密码重置邮件，10分钟内只能尝试3次
-        $this->middleware('throttle:3,10', [ 'only' => ['sendResetLinkEmail'] ]);
-    }
+    //     // 限流密码重置邮件，10分钟内只能尝试3次
+    //     $this->middleware('throttle:3,10', [ 'only' => ['sendResetLinkEmail'] ]);
+    // }
 }
