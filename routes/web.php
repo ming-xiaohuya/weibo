@@ -40,3 +40,7 @@ Route::post('password/reset', 'PasswordController@reset')->name('password.update
 
 // 发布微博路由
 Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
+
+// 粉丝页面路由
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
