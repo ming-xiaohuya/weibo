@@ -54,7 +54,10 @@ class User extends Authenticatable
     // Gravatar 为 “全球通用头像”
     public function gravatar($size = '100') {
         $hash = md5(strtolower(trim($this->attributes['email'])));
-        return "http://www.gravatar.com/avatar/$hash?s=$size";
+
+        // 使用国内镜源
+        return "https://gravatar.zeruns.tech/avatar/$hash?s=$size";
+        // return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
 
     // 关联数据表，一对多
